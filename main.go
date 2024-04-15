@@ -38,7 +38,7 @@ func importantSIGNodeDashboards() map[string][]string {
 			"node-kubelet-containerd-standalone-mode",
 			"node-kubelet-containerd-standalone-mode-all-alpha",
 			"node-kubelet-serial-containerd",
-		},
+		},/*
 		"sig-node-kubelet": []string{
 			"gcp-kubelet-credential-provider",
 			"kubelet-gce-e2e-fsquota-ubuntu",
@@ -95,15 +95,16 @@ func importantSIGNodeDashboards() map[string][]string {
 			"kubelet-gce-e2e-swap-fedora-serial",
 			"ci-node-e2e-crio-dra",
 			"ci-node-e2e-crio-dra-features",
-		},
+		},*/
 	}
 }
 
 func main() {
 	// map of testname to (total pass, total fails).
 	type stat struct {
-		pass int
-		fail int
+		pass  int
+		fail  int
+		empty int
 	}
 	testData := map[string]*stat{}
 
@@ -137,6 +138,9 @@ func main() {
 				}
 
 				for _, result := range row.Cells {
+					if result.Result == int32(statuspb.TestStatus_NO_RESULT) {
+						testData[row.Name].empty += 1
+					}
 					if result.Result == int32(statuspb.TestStatus_PASS) {
 						testData[row.Name].pass += 1
 					}
@@ -151,8 +155,8 @@ func main() {
 	// Sort by flakiness
 	tests := maps.Keys(testData)
 	sort.Slice(tests, func(a, b int) bool {
-		first := float32(testData[tests[a]].fail) / float32(testData[tests[a]].fail + testData[tests[a]].pass)
-		second := float32(testData[tests[b]].fail) / float32(testData[tests[b]].fail + testData[tests[b]].pass)
+		first := float32(testData[tests[a]].fail) / float32(testData[tests[a]].fail + testData[tests[a]].pass + testData[tests[a]].empty)
+		second := float32(testData[tests[b]].fail) / float32(testData[tests[b]].fail + testData[tests[b]].pass + testData[tests[b]].empty)
 
 		return first < second
 	})
@@ -161,7 +165,7 @@ func main() {
 	fmt.Println("|----------|--------|")
 	for i := len(tests)-1; i >= 0; i-- {
 		val := testData[tests[i]]
-		flakyPercent := float32(val.fail) / float32(val.fail + val.pass)*100
+		flakyPercent := float32(val.fail) / float32(val.fail + val.pass + val.empty)*100
 		if flakyPercent < 1 || val.fail == 0 {
 			continue
 		}
