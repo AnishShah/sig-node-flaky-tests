@@ -5,6 +5,8 @@ Small script to find top flaky tests from http://testgrid.k8s.io/sig-node
 
 ### sig-node-release-blocking flaky tests
 
+22/249 sig-node-release-blocking tests are >1% flaky
+
 | Testname | Flaky% |
 |----------|--------|
 | E2eNode Suite.[It] [sig-node] Device Manager [Serial] [Feature:DeviceManager] [NodeFeature:DeviceManager] With sample device plugin [Serial] [Disruptive] should deploy pod consuming devices first but fail with admission error after kubelet restart in case device plugin hasn't re-registered | 14.444445 |
@@ -31,6 +33,8 @@ Small script to find top flaky tests from http://testgrid.k8s.io/sig-node
 | E2eNode Suite.[It] [sig-node] Device Plugin [Feature:DevicePluginProbe] [NodeFeature:DevicePluginProbe] [Serial] DevicePlugin [Serial] [Disruptive] Can schedule a pod that requires a device | 1.111111 |
 
 ### Overall testgrid flaky tests
+
+33/973 sig-node tests are >1% flaky
 
 | Testname | Flaky% |
 |----------|--------|

@@ -38,7 +38,7 @@ func importantSIGNodeDashboards() map[string][]string {
 			"node-kubelet-containerd-standalone-mode",
 			"node-kubelet-containerd-standalone-mode-all-alpha",
 			"node-kubelet-serial-containerd",
-		},/*
+		},
 		"sig-node-kubelet": []string{
 			"gcp-kubelet-credential-provider",
 			"kubelet-gce-e2e-fsquota-ubuntu",
@@ -95,7 +95,7 @@ func importantSIGNodeDashboards() map[string][]string {
 			"kubelet-gce-e2e-swap-fedora-serial",
 			"ci-node-e2e-crio-dra",
 			"ci-node-e2e-crio-dra-features",
-		},*/
+		},
 	}
 }
 
@@ -161,6 +161,7 @@ func main() {
 		return first < second
 	})
 
+	count := 0
 	fmt.Println("| Testname | Flaky% |")
 	fmt.Println("|----------|--------|")
 	for i := len(tests)-1; i >= 0; i-- {
@@ -169,6 +170,8 @@ func main() {
 		if flakyPercent < 1 || val.fail == 0 {
 			continue
 		}
+		count += 1
 		fmt.Printf("| %s | %f |\n", tests[i], flakyPercent)
 	}
+	fmt.Printf("\n\n\n%d/%d tests are flaky\n", count, len(tests))
 }
