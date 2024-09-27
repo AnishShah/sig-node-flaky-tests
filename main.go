@@ -89,12 +89,9 @@ func importantSIGNodeDashboards() map[string][]string {
 			"ci-crio-cgroupv1-node-e2e-unlabelled",
 			"ci-crio-cgroupv2-node-e2e-conformance",
 			"ci-crio-cgroupv2-node-e2e-eviction",
-			"node-kubelet-serial-crio",
 			"kubelet-swap-conformance-fedora-serial",
 			"kubelet-gce-e2e-swap-fedora",
 			"kubelet-gce-e2e-swap-fedora-serial",
-			"ci-node-e2e-crio-dra",
-			"ci-node-e2e-crio-dra-features",
 		},
 	}
 }
@@ -111,6 +108,7 @@ func main() {
 	for dashboard, tabs := range importantSIGNodeDashboards() {
 		for _, tab := range tabs {
 			ep := fmt.Sprintf("http://testgrid-data.k8s.io/api/v1/dashboards/%s/tabs/%s/rows", dashboard, tab)
+			fmt.Println(ep)
 			resp, err := http.Get(ep)
 			if err != nil {
 				panic(err)

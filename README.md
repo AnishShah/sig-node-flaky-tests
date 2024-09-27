@@ -1,6 +1,55 @@
 # sig-node-flaky-tests
 Small script to find top flaky tests from http://testgrid.k8s.io/sig-node
 
+## v1.31 release
+
+### sig-node-release-blocking flaky tests
+
+5/220 sig-node-release-blocking tests are >1% flaky
+
+| Testname | Flaky% |
+|----------|--------|
+| E2eNode Suite.[It] [sig-node] Kubelet Config [Slow] [Serial] [Disruptive] [NodeFeature:KubeletConfigDropInDir] when merging drop-in configs should merge kubelet configs correctly | 7.954545 |
+| E2eNode Suite.[It] [sig-node] Restart [Serial] [Slow] [Disruptive] Kubelet should evict running pods that do not meet the affinity after the kubelet restart | 7.954545 |
+| E2eNode Suite.[It] [sig-node] CriticalPod [Serial] [Disruptive] [NodeFeature:CriticalPod] when we need to admit a critical pod should be able to create and delete a critical pod | 2.272727 |
+| E2eNode Suite.[It] [sig-node] Restart [Serial] [Slow] [Disruptive] Kubelet should force-delete non-admissible pods that was admitted and running before kubelet restart | 2.272727 |
+| E2eNode Suite.[It] [sig-node] ImageGarbageCollect [Serial] [NodeFeature:GarbageCollect] when ImageMaximumGCAge is set should not GC unused images prematurely | 1.136364 |
+
+
+### Overall testgrid flaky tests
+
+25/1056 sig-node tests are >1% flaky
+
+| Testname | Flaky% |
+|----------|--------|
+| E2eNode Suite.[It] [sig-node] Memory Manager [Disruptive] [Serial] [Feature:MemoryManager] with static policy when guaranteed pod memory request is bigger than free memory on each NUMA node should be rejected | 25.000000 |
+| E2eNode Suite.[It] [sig-node] LocalStorageEviction [Slow] [Serial] [Disruptive] [NodeFeature:Eviction] when we run containers that should cause DiskPressure  should eventually evict all of the correct pods | 22.500000 |
+| E2eNode Suite.[It] [sig-node] LocalStorageSoftEviction [Slow] [Serial] [Disruptive] [NodeFeature:Eviction] when we run containers that should cause DiskPressure  should eventually evict all of the correct pods | 19.166666 |
+| E2eNode Suite.[It] [sig-node] ImageGCNoEviction [Slow] [Serial] [Disruptive] [NodeFeature:Eviction] when we run containers that should cause DiskPressure  should eventually evict all of the correct pods | 14.583333 |
+| E2eNode Suite.[It] [sig-node] InodeEviction [Slow] [Serial] [Disruptive] [NodeFeature:Eviction] when we run containers that should cause DiskPressure  should eventually evict all of the correct pods | 13.750000 |
+| E2eNode Suite.[It] [sig-node] Device Manager [Serial] [NodeFeature:DeviceManager] With sample device plugin [Serial] [Disruptive] should deploy pod consuming devices first but fail with admission error after kubelet restart in case device plugin hasn't re-registered [Flaky] | 10.769231 |
+| E2eNode Suite.[It] [sig-node] Device Plugin [NodeFeature:DevicePlugin] [Serial] DevicePlugin [Serial] [Disruptive] Keeps device plugin assignments across node reboots (no pod restart, no device plugin re-registration) [Flaky] | 8.717949 |
+| E2eNode Suite.[It] [sig-node] PriorityPidEvictionOrdering [Slow] [Serial] [Disruptive] [NodeFeature:Eviction] when we run containers with PodAndContainerStatsFromCRI=false that should cause PIDPressure  should eventually evict all of the correct pods | 8.333334 |
+| E2eNode Suite.[It] [sig-node] PriorityPidEvictionOrdering [Slow] [Serial] [Disruptive] [NodeFeature:Eviction] when we run containers that should cause PIDPressure  should eventually evict all of the correct pods | 7.916667 |
+| E2eNode Suite.[It] [sig-node] Kubelet Config [Slow] [Serial] [Disruptive] [NodeFeature:KubeletConfigDropInDir] when merging drop-in configs should merge kubelet configs correctly | 7.172996 |
+| E2eNode Suite.[It] [sig-node] PriorityLocalStorageEvictionOrdering [Slow] [Serial] [Disruptive] [NodeFeature:Eviction] when we run containers that should cause DiskPressure  should eventually evict all of the correct pods | 7.083333 |
+| E2eNode Suite.[It] [sig-node] PriorityPidEvictionOrdering [Slow] [Serial] [Disruptive] [NodeFeature:Eviction] when we run containers with PodAndContainerStatsFromCRI=true that should cause PIDPressure  should eventually evict all of the correct pods | 7.083333 |
+| E2eNode Suite.[It] [sig-node] PriorityPidEvictionOrdering [Slow] [Serial] [Disruptive] [NodeFeature:Eviction] when we run containers that should cause PIDPressure; baseline scenario to verify DisruptionTarget is added  should eventually evict all of the correct pods | 6.250000 |
+| E2eNode Suite.[It] [sig-node] [NodeFeature:SidecarContainers] Containers Lifecycle should terminate sidecars simultaneously if prestop doesn't exit [cos-stable01] | 4.802260 |
+| E2eNode Suite.[It] [sig-node] Restart [Serial] [Slow] [Disruptive] Kubelet should evict running pods that do not meet the affinity after the kubelet restart | 4.641350 |
+| Kubernetes e2e suite.[It] [sig-node] [Feature:GPUDevicePlugin] [Serial] Sanity test using nvidia-smi should run nvidia-smi and cuda-demo-suite | 4.166667 |
+| E2eNode Suite.[It] [sig-node] Density [Serial] [Slow] create a batch of pods [Flaky] latency/resource should be within limit when create 10 pods with 0s interval | 3.589744 |
+| E2eNode Suite.[It] [sig-node] Density [Serial] [Slow] create a sequence of pods [Flaky] latency/resource should be within limit when create 10 pods with 50 background pods | 2.564103 |
+| Kubernetes e2e suite.[It] [sig-node] [Feature:GPUDevicePlugin] [Serial] Test using a Pod should run gpu based matrix multiplication | 2.500000 |
+| E2eNode Suite.[It] [sig-node] Device Plugin [NodeFeature:DevicePlugin] [Serial] DevicePlugin [Serial] [Disruptive] Keeps device plugin assignments after kubelet restart and device plugin restart (no pod restart) | 1.976285 |
+| Kubernetes e2e suite.[It] [sig-node] Container Lifecycle Hook when create a pod with lifecycle hook should execute poststart https hook properly [MinimumKubeletVersion:1.23] [NodeConformance] | 1.694915 |
+| E2eNode Suite.[It] [sig-node] [NodeFeature:SidecarContainers] Containers Lifecycle should terminate sidecars simultaneously if prestop doesn't exit [ubuntu01] | 1.416431 |
+| E2eNode Suite.[It] [sig-node] Device Plugin [NodeFeature:DevicePlugin] [Serial] DevicePlugin [Serial] [Disruptive] Keeps device plugin assignments across kubelet restarts (no pod restart, no device plugin restart) | 1.185771 |
+| E2eNode Suite.[It] [sig-node] Topology Manager [Serial] [Feature:TopologyManager] With kubeconfig updated to static CPU Manager policy run the Topology Manager tests run Topology Manager policy test suite | 1.005025 |
+| E2eNode Suite.[It] [sig-node] Topology Manager [Serial] [Feature:TopologyManager] With kubeconfig's topologyOptions updated to static CPU Manager policy run the Topology Manager tests run Topology Manager policy test suite | 1.005025 |
+
+
+
 ## v1.30 release
 
 ### sig-node-release-blocking flaky tests
